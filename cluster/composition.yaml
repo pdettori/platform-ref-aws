@@ -3,7 +3,7 @@ kind: Composition
 metadata:
   name: compositeclusters.aws.platformref.crossplane.io
 spec:
-  writeConnectionSecretsToNamespace: upbound-system
+  writeConnectionSecretsToNamespace: crossplane-system
   compositeTypeRef:
     apiVersion: aws.platformref.crossplane.io/v1alpha1
     kind: CompositeCluster
@@ -40,3 +40,5 @@ spec:
           toFieldPath: spec.providerConfigRef.name
         - fromFieldPath: spec.parameters.services.operators.prometheus.version
           toFieldPath: spec.operators.prometheus.version
+        - fromFieldPath: spec.parameters.services.operators.klusterlet.version
+          toFieldPath: spec.operators.klusterlet.version  

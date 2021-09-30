@@ -29,6 +29,13 @@ spec:
                       version:
                         type: string
                         description: Prometheus operator version to run.
+                  klusterlet:
+                    type: object
+                    description: Configuration for the Klusterlet agent (OCM).
+                    properties:
+                      version:
+                        type: string
+                        description: Klusterlet agent version to run.      
               providerConfigRef:
                 type: object
                 description: "A reference to the ProviderConfig of the cluster that services should

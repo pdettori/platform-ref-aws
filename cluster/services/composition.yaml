@@ -6,7 +6,7 @@ metadata:
     plan: full
     provider: helm
 spec:
-  writeConnectionSecretsToNamespace: upbound-system
+  writeConnectionSecretsToNamespace: crossplane-system
   compositeTypeRef:
     apiVersion: aws.platformref.crossplane.io/v1alpha1
     kind: Services
@@ -37,3 +37,32 @@ spec:
         # Derive the Prometheus operator image and tag from the XR.
         - fromFieldPath: spec.operators.prometheus.version
           toFieldPath: spec.forProvider.chart.version
+    - base:
+        apiVersion: helm.crossplane.io/v1beta1
+        kind: Release
+        spec:
+          rollbackLimit: 3
+          forProvider:
+            namespace: operators
+            chart:
+              name: klusterlet
+              repository: https://pdettori.github.io/registration-operator/
+              version: 0.1.1
+            valuesFrom:
+              - secretKeyRef:
+                  key: values.yaml
+                  name: ocm-agent-bootstrap
+                  namespace: default
+                  optional: false
+      patches:
+        # All Helm releases derive their labels and annotations from the XR.
+        - fromFieldPath: metadata.labels
+          toFieldPath: metadata.labels
+        - fromFieldPath: metadata.annotations
+          toFieldPath: metadata.annotations
+        # All Helm releases derive the ProviderConfig to use from the XR.
+        - fromFieldPath: spec.providerConfigRef.name
+          toFieldPath: spec.providerConfigRef.name
+        # Derive the Prometheus operator image and tag from the XR.
+        - fromFieldPath: spec.operators.klusterlet.version
+          toFieldPath: spec.forProvider.chart.version          

@@ -141,6 +141,13 @@ spec:
                               version:
                                 type: string
                                 description: Prometheus operator version to run.
+                          klusterlet:
+                            type: object
+                            description: Configuration for the Klusterlet agent.
+                            properties:
+                              version:
+                                type: string
+                                description: Klusterlet agent version to run.      
                   networkRef:
                     type: object
                     description: "A reference to the Network object that this cluster should be

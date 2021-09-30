@@ -12,6 +12,8 @@ spec:
       operators:
         prometheus:
           version: "10.0.2"
+        klusterlet:
+          version: "0.1.1"  
     networkRef:
       id: platform-ref-aws-network
   writeConnectionSecretToRef:
